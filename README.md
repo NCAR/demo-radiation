@@ -7,5 +7,6 @@ To build and run the demo:
 mkdir build
 cd build
 cmake ..
+make
 ./demo
 ```
