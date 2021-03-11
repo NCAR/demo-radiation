@@ -1,2 +1,2 @@
 # demo-radiation
-Toy model for Aerosol-Radiation communication
+Toy model for Aerosol&ndash;Radiation communication
