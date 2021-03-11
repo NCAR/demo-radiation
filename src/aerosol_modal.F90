@@ -1,8 +1,8 @@
 ! a modal aerosol module
 module musica_aerosol_modal
 
-  use musica_aerosol,                  only : aerosol_t
-  use musica_material_optics,          only : material_optics_grid_t,         &
+  use musica_aerosol,                  only : aerosol_t,                      &
+                                              material_optics_grid_t,         &
                                               material_optics_sample_t
   use musica_wavelength_grid,          only : wavelength_grid_t
 
@@ -14,11 +14,10 @@ module musica_aerosol_modal
   ! a modal aerosol state and diagnostics
   type, extends( aerosol_t ) :: aerosol_modal_t
     integer :: number_of_modes_
-    real, allocatable(:) :: state_ ! stand-in for mass, number, etc.
+    real, allocatable :: state_( : ) ! stand-in for mass, number, etc.
   contains
     procedure, private :: get_optics_grid
     procedure, private :: get_optics_sample
-    generic :: get_optics => get_optics_grid, get_optics_sample
   end type aerosol_modal_t
 
   ! calculator of aerosol optical properties for a particular wavelength grid
@@ -54,7 +53,9 @@ contains
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-  type( aerosol_modal_t ) function constructor( ) result( aerosol )
+  function constructor( ) result( aerosol )
+    type( aerosol_modal_t ), pointer :: aerosol
+    allocate( aerosol )
     aerosol%number_of_modes_ = 3
     allocate( aerosol%state_( aerosol%number_of_modes_ ) )
     ! initialize other aerosol parameters
@@ -88,7 +89,7 @@ contains
   function get_optics_sample( this, wavelength__m ) result( optics )
     class( material_optics_sample_t ), pointer      :: optics
     class( aerosol_modal_t ),          intent( in ) :: this
-    class( wavelength_grid_t ),        intent( in ) :: grid
+    real,                              intent( in ) :: wavelength__m
 
     allocate( material_optics_sample_modal_t :: optics )
     select type( optics )
@@ -106,7 +107,7 @@ contains
   subroutine grid_optical_depth( this, aerosol, optical_depths )
     class( material_optics_grid_modal_t ), intent( in )  :: this
     class( aerosol_t ),                    intent( in )  :: aerosol
-    real( : ),                             intent( out ) :: optical_depths
+    real,                                  intent( out ) :: optical_depths( : )
 
     ! do the run-time calculations for aerosol optical depth using the
     ! parameters set during intialization
@@ -119,7 +120,7 @@ contains
   subroutine grid_scattering_optical_depth( this, aerosol, optical_depths )
     class( material_optics_grid_modal_t ), intent( in )  :: this
     class( aerosol_t ),                    intent( in )  :: aerosol
-    real( : ),                             intent( out ) :: optical_depths
+    real,                                  intent( out ) :: optical_depths( : )
 
     ! do the run-time calculations for aerosol optical depth using the
     ! parameters set during intialization
@@ -134,7 +135,7 @@ contains
       optical_depths )
     class( material_optics_grid_modal_t ), intent( in )  :: this
     class( aerosol_t ),                    intent( in )  :: aerosol
-    real( : ),                             intent( out ) :: optical_depths
+    real,                                  intent( out ) :: optical_depths( : )
 
     ! do the run-time calculations for aerosol optical depth using the
     ! parameters set during intialization
@@ -186,4 +187,4 @@ contains
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-end module musica_aerosol
+end module musica_aerosol_modal

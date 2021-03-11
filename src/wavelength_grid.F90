@@ -12,8 +12,8 @@ module musica_wavelength_grid
 
   type :: wavelength_grid_t
     private
-    real, allocatable(:) :: min_wavelength__m_
-    real, allocatable(:) :: max_wavelength__m_
+    real, allocatable :: min_wavelength__m_( : )
+    real, allocatable :: max_wavelength__m_( : )
     integer :: interpolation_type_ = kUnspecifiedInterpolation
   contains
     procedure :: number_of_bins
@@ -33,11 +33,13 @@ contains
     allocate( grid%max_wavelength__m_( 3 ) )
     grid%min_wavelength__m_( : ) = (/ 12.3, 43.2, 93.4 /)
     grid%max_wavelength__m_( : ) = (/ 22.3, 64.2, 99.4 /)
+    grid%interpolation_type_ = kUnspecifiedInterpolation
   end function constructor
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-  integer function number_of_bins( )
+  integer function number_of_bins( this )
+    class( wavelength_grid_t ), intent( in ) ::  this
     number_of_bins = 3
   end function number_of_bins
 
