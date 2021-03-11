@@ -26,4 +26,4 @@ The relevant parts of this toy model for CCPP are in `model.F90` (the host model
 
 (The registration of an `aerosol_t` object by a separate aerosol scheme was left out of this demo for simplicity, and simply created in `model.F90`.)
 
-The structure of this simple `aerosol_t` type is what we expected could be an outcome of the larger aerosol API effort currently being discussed.
+The structure of this simple `aerosol_t` type is what we expect could be an outcome of the larger aerosol API effort currently being discussed.
