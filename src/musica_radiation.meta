@@ -1,0 +1,47 @@
+[ccpp-table-properties]
+  name = musica_radiation
+  type = scheme
+
+[ccpp-arg-table]
+  name  = musica_radiation_initialize
+  type  = scheme
+[ aerosol ]
+  standard_name = modal_aerosol_object
+  units = none
+  type = aerosol_t | polymorphic = True
+  dimensions = ()
+  intent = in
+[ errcode ]
+  standard_name = ccpp_error_code
+  units = 1
+  type = integer
+  dimensions = ()
+  intent = out
+[ errmsg ]
+  standard_name = ccpp_error_message
+  units = 1
+  type = character | kind = len=512
+  dimensions = ()
+  intent = out
+
+[ccpp-arg-table]
+  name  = musica_radiation_run
+  type  = scheme
+[ aerosol ]
+  standard_name = modal_aerosol_object
+  units = enter_units
+  type = aerosol_t
+  dimensions = ()
+  intent = in
+[ errcode ]
+  standard_name = ccpp_error_code
+  units = 1
+  type = integer
+  dimensions = ()
+  intent = out
+[ errmsg ]
+  standard_name = ccpp_error_message
+  units = 1
+  type = character | kind = len=512
+  dimensions = ()
+  intent = out
