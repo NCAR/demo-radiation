@@ -1,6 +1,7 @@
 ! a modal aerosol module
 module musica_aerosol_modal
 
+  use ccpp_kinds,                      only : kind_phys
   use musica_aerosol,                  only : aerosol_t,                      &
                                               material_optics_grid_t,         &
                                               material_optics_sample_t
@@ -19,7 +20,7 @@ module musica_aerosol_modal
   !! \htmlinclude aerosol_modal_t.html
   type, extends( aerosol_t ) :: aerosol_modal_t
     integer           :: number_of_modes_
-    real, allocatable :: state_( : ) ! stand-in for mass, number, etc.
+    real(kind_phys), allocatable :: state_(:) ! stand-in for mass, number, etc.
   contains
     procedure, private :: get_optics_grid
     procedure, private :: get_optics_sample
@@ -78,7 +79,7 @@ contains
     type is( material_optics_grid_modal_t )
       ! read file data, calculate parameters needed to do optics calculations
       ! (do expensive, initialization-time calculations here)
-      optics%my_parameter_ = 12
+      optics%my_parameter_ = this%number_of_modes_
 
       ! save the grid, or just use the grid dimensions to set optics
       ! parameters
@@ -200,16 +201,26 @@ contains
 
     errcode = 0
     errmsg = ''
+
+    aerosol = aerosol_modal_t()
+
   end subroutine aerosol_modal_init
 
   !> \section arg_table_aerosol_modal_run  Argument Table
   !! \htmlinclude aerosol_modal_run.html
-  subroutine aerosol_modal_run(errcode, errmsg)
+  subroutine aerosol_modal_run(aerosol, errcode, errmsg)
+    type(aerosol_modal_t), intent(in)  :: aerosol
     integer,               intent(out) :: errcode
     character(len=512),    intent(out) :: errmsg
 
     errcode = 0
     errmsg = ''
+
+    if (.not. allocated(aerosol%state_)) then
+       errcode = 1
+       errmsg = 'ERROR: aerosol not allocated'
+    end if
+
   end subroutine aerosol_modal_run
 
 end module musica_aerosol_modal
