@@ -60,7 +60,8 @@ contains
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   function constructor( ) result( aerosol )
-    type( aerosol_sectional_t ) :: aerosol
+    type( aerosol_sectional_t ), pointer :: aerosol
+    allocate( aerosol )
     aerosol%number_of_sections_ = 5
     allocate( aerosol%state_( aerosol%number_of_sections_ ) )
     ! initialize other aerosol parameters
