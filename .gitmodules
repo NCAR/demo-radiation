@@ -1,0 +1,3 @@
+[submodule "ccpp_framework"]
+	path = ccpp_framework
+	url = https://github.com/gold2718/ccpp-framework

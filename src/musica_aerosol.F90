@@ -7,6 +7,8 @@ module musica_aerosol
   public :: aerosol_t, material_optics_grid_t, material_optics_sample_t
 
   ! an aerosol state and diagnostics
+  !> \section arg_table_aerosol_t  Argument Table
+  !! \htmlinclude aerosol_t.html
   type, abstract :: aerosol_t
   contains
     procedure(get_optics_grid), deferred, private :: get_optics_grid

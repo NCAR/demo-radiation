@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="toy_suite" version="1.0">
+  <group name="chemistry">
+    <scheme>aerosol_modal</scheme>
+    <scheme>musica_radiation</scheme>
+  </group>
+</suite>
