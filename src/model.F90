@@ -16,11 +16,21 @@ CONTAINS
       use demo_rad_ccpp_cap, only: demo_rad_ccpp_physics_timestep_final
       use demo_rad_ccpp_cap, only: demo_rad_ccpp_physics_finalize
 
-      integer                   :: i_time
-      integer                   :: errcode
-      integer                   :: col_start = 1
-      integer                   :: col_end = 1
-      character(len=512)        :: errmsg
+      integer                       :: i_time
+      integer                       :: errcode
+      integer                       :: col_start = 1
+      integer                       :: col_end = 1
+      character(len=512)            :: errmsg
+      character(len=256)            :: arg_val
+      character(len=*), allocatable :: aerosol_model_name
+
+      ! get the aerosol model name
+      if( command_argument_count( ) .ne. 1 ) then
+        write(*,*) "Usage: ./demo aerosol_model_name"
+        stop 3
+      endif
+      call get_command_argument( 1, arg_val )
+      aerosol_model_name = trim( arg_val )
 
       ! Use the suite information to setup the run
       call demo_rad_ccpp_physics_initialize('toy_suite', errmsg, errcode)

@@ -8,7 +8,8 @@ mkdir build
 cd build
 cmake ..
 make
-./demo
+./demo modal
+./demo sectional
 ```
 ## Requirements
 

@@ -1,29 +1,14 @@
 [ccpp-table-properties]
-  name = aerosol_modal_t
-  type = ddt
-  dependencies = musica_aerosol.F90,musica_wavelength_grid.F90
-
-[ccpp-arg-table]
-  name  = aerosol_modal_t
-  type  = ddt
-[ number_of_modes_ ]
-  standard_name = number_of_aerosol_modes
-  units = count
-  type = integer
-  dimensions = ()
-
-[ccpp-table-properties]
-  name = aerosol_modal
+  name = musica_aerosol_factory
   type = scheme
-  dependencies = musica_aerosol.F90,musica_wavelength_grid.F90
 
 [ccpp-arg-table]
-  name  = aerosol_modal_init
+  name  = musica_aerosol_factory_init
   type  = scheme
-[ aerosol ]
-  standard_name = modal_aerosol_object
+[ type_name ]
+  standard_name = aerosol_model_name
   units = none
-  type = aerosol_modal_t
+  type = character | kind = len=*
   dimensions = ()
   intent = out
 [ errcode ]
@@ -40,14 +25,36 @@
   intent = out
 
 [ccpp-arg-table]
-  name  = aerosol_modal_run
+  name  = musica_aerosol_factory_run
   type  = scheme
 [ aerosol ]
-  standard_name = modal_aerosol_object
+  standard_name = aerosol
   units = none
-  type = aerosol_modal_t
+  type = aerosol_t | polymorphic = True
   dimensions = ()
-  intent = in
+  intent = inout
+[ errcode ]
+  standard_name = ccpp_error_code
+  units = 1
+  type = integer
+  dimensions = ()
+  intent = out
+[ errmsg ]
+  standard_name = ccpp_error_message
+  units = 1
+  type = character | kind = len=512
+  dimensions = ()
+  intent = out
+
+[ccpp-arg-table]
+  name  = musica_aerosol_factory_final
+  type  = scheme
+[ aerosol ]
+  standard_name = aerosol
+  units = none
+  type = aerosol_t | polymorphic = True
+  dimensions = ()
+  intent = inout
 [ errcode ]
   standard_name = ccpp_error_code
   units = 1

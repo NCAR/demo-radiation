@@ -5,3 +5,8 @@
 [ccpp-arg-table]
   name  = aerosol_t
   type  = ddt
+
+[ccpp-table-properties]
+  name = aerosol
+  type = scheme
+

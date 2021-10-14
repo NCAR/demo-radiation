@@ -22,7 +22,6 @@ contains
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-  ! this would be the CCPP initialize function for radiation
   !> \section arg_table_musica_radiation_initialize  Argument Table
   !! \htmlinclude musica_radiation_initialize.html
   subroutine musica_radiation_initialize(aerosol, errcode, errmsg)
@@ -45,7 +44,6 @@ contains
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-  ! this would be the CCPP run function for radiation
   !> \section arg_table_musica_radiation_run  Argument Table
   !! \htmlinclude musica_radiation_run.html
   subroutine musica_radiation_run(aerosol, errcode, errmsg)
