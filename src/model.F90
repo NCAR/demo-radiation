@@ -72,9 +72,12 @@ end module demo_rad_mod
 
 ! the host model
 program model
-   use demo_rad_mod, only: demo_rad
+   use demo_rad_mod,  only: demo_rad
+   use demo_rad_data, only: demo_rad_data_init
    implicit none
 
+   ! This aerosol model type could be read from a namelist
+   call demo_rad_data_init('modal_aerosol')
    call demo_rad()
 
 end program model

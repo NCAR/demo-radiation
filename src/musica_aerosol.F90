@@ -10,10 +10,13 @@ module musica_aerosol
   !> \section arg_table_aerosol_t  Argument Table
   !! \htmlinclude aerosol_t.html
   type, abstract :: aerosol_t
+     logical :: initialized = .false.
   contains
     procedure(get_optics_grid), deferred, private :: get_optics_grid
     procedure(get_optics_sample), deferred, private :: get_optics_sample
     generic :: get_optics => get_optics_grid, get_optics_sample
+    procedure(init_aerosol), deferred :: init
+    procedure(run_aerosol), deferred :: run
   end type aerosol_t
 
   ! calculator of aerosol optical properties for a particular wavelength grid
@@ -135,6 +138,26 @@ interface
     class( aerosol_t ),                intent( in )  :: aerosol
     real,                              intent( out ) :: optical_depth
   end subroutine sample_forward_scattering_optical_depth
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+  ! initialize the aerosol model
+  subroutine init_aerosol( aerosol, errcode, errmsg )
+    import aerosol_t
+    class( aerosol_t ), intent( inout ) :: aerosol
+    integer,            intent( out )   :: errcode
+    character(len=512), intent( out )   :: errmsg
+  end subroutine init_aerosol
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+  ! run the aerosol model
+  subroutine run_aerosol( aerosol, errcode, errmsg )
+    import aerosol_t
+    class( aerosol_t ), intent( inout ) :: aerosol
+    integer,            intent( out )   :: errcode
+    character(len=512), intent( out )   :: errmsg
+  end subroutine run_aerosol
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
