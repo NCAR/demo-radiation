@@ -6,7 +6,7 @@
   name  = musica_radiation_initialize
   type  = scheme
 [ aerosol ]
-  standard_name = modal_aerosol_object
+  standard_name = aerosol_object
   units = none
   type = aerosol_t | polymorphic = True
   dimensions = ()
@@ -28,9 +28,9 @@
   name  = musica_radiation_run
   type  = scheme
 [ aerosol ]
-  standard_name = modal_aerosol_object
+  standard_name = aerosol_object
   units = enter_units
-  type = aerosol_t
+  type = aerosol_t | polymorphic = True
   dimensions = ()
   intent = in
 [ errcode ]

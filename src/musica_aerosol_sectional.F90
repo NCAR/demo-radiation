@@ -1,5 +1,5 @@
-! a modal aerosol module
-module musica_aerosol_modal
+! a sectional aerosol module
+module musica_aerosol_sectional
 
   use ccpp_kinds,                      only : kind_phys
   use musica_aerosol,                  only : aerosol_t,                      &
@@ -10,20 +10,20 @@ module musica_aerosol_modal
   implicit none
   private
 
-  public :: aerosol_modal_t
+  public :: aerosol_sectional_t
 
-  ! a modal aerosol state and diagnostics
-  type, extends( aerosol_t ) :: aerosol_modal_t
-    integer           :: number_of_modes_
+  ! a sectional aerosol state and diagnostics
+  type, extends( aerosol_t ) :: aerosol_sectional_t
+    integer           :: number_of_sections_
     real(kind_phys), allocatable :: state_(:) ! stand-in for mass, number, etc.
   contains
     procedure, private :: get_optics_grid
     procedure, private :: get_optics_sample
-    procedure, public  :: aerosol_run => aerosol_modal_run
-  end type aerosol_modal_t
+    procedure, public  :: aerosol_run => aerosol_sectional_run
+ end type aerosol_sectional_t
 
   ! calculator of aerosol optical properties for a particular wavelength grid
-  type, extends( material_optics_grid_t ) :: material_optics_grid_modal_t
+  type, extends( material_optics_grid_t ) :: material_optics_grid_sectional_t
     ! any parameters needed to calculate optics at run-time
     integer :: my_parameter_
     type( wavelength_grid_t ) :: grid_
@@ -32,11 +32,11 @@ module musica_aerosol_modal
     procedure :: scattering_optical_depth => grid_scattering_optical_depth
     procedure :: forward_scattering_optical_depth =>                          &
                      grid_forward_scattering_optical_depth
-  end type material_optics_grid_modal_t
+  end type material_optics_grid_sectional_t
 
   ! calculator of aerosol optical properties for a particular wavelength
   ! sample
-  type, extends( material_optics_sample_t ) :: material_optics_sample_modal_t
+  type, extends( material_optics_sample_t ) :: material_optics_sample_sectional_t
     ! any parameters needed to calculate optics at run-time
     integer :: my_parameter_
     real :: wavelength__m_
@@ -45,22 +45,22 @@ module musica_aerosol_modal
     procedure :: scattering_optical_depth => sample_scattering_optical_depth
     procedure :: forward_scattering_optical_depth =>                          &
                    sample_forward_scattering_optical_depth
-  end type material_optics_sample_modal_t
+  end type material_optics_sample_sectional_t
 
-  interface aerosol_modal_t
+  interface aerosol_sectional_t
     module procedure :: constructor
-  end interface aerosol_modal_t
+  end interface aerosol_sectional_t
 
 contains
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   function constructor( ) result( aerosol )
-    type( aerosol_modal_t ) :: aerosol
-    aerosol%number_of_modes_ = 3
-    allocate( aerosol%state_( aerosol%number_of_modes_ ) )
+    type( aerosol_sectional_t ), pointer :: aerosol
+    allocate( aerosol )
+    aerosol%number_of_sections_ = 5
+    allocate( aerosol%state_( aerosol%number_of_sections_ ) )
     ! initialize other aerosol parameters
-    aerosol%initialized = .true.
   end function constructor
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -68,15 +68,15 @@ contains
   ! creates an optics object for this aerosol for the specified wavelength grid
   function get_optics_grid( this, grid ) result( optics )
     class( material_optics_grid_t ), pointer      :: optics
-    class( aerosol_modal_t ),        intent( in ) :: this
+    class( aerosol_sectional_t ),        intent( in ) :: this
     class( wavelength_grid_t ),      intent( in ) :: grid
 
-    allocate( material_optics_grid_modal_t :: optics )
+    allocate( material_optics_grid_sectional_t :: optics )
     select type( optics )
-    type is( material_optics_grid_modal_t )
+    type is( material_optics_grid_sectional_t )
       ! read file data, calculate parameters needed to do optics calculations
       ! (do expensive, initialization-time calculations here)
-      optics%my_parameter_ = this%number_of_modes_
+      optics%my_parameter_ = this%number_of_sections_
 
       ! save the grid, or just use the grid dimensions to set optics
       ! parameters
@@ -90,15 +90,15 @@ contains
   ! sample
   function get_optics_sample( this, wavelength__m ) result( optics )
     class( material_optics_sample_t ), pointer      :: optics
-    class( aerosol_modal_t ),          intent( in ) :: this
+    class( aerosol_sectional_t ),          intent( in ) :: this
     real,                              intent( in ) :: wavelength__m
 
-    allocate( material_optics_sample_modal_t :: optics )
+    allocate( material_optics_sample_sectional_t :: optics )
     select type( optics )
-    type is( material_optics_sample_modal_t )
+    type is( material_optics_sample_sectional_t )
       ! read file data, calculate parameters needed to do optics calculations
       ! (do expensive, initialization-time calculations here)
-      optics%my_parameter_  = 12
+      optics%my_parameter_  = 32
       optics%wavelength__m_ = wavelength__m
     end select
   end function get_optics_sample
@@ -107,7 +107,7 @@ contains
 
   ! calculates optical depth for the aerosol on the specified grid
   subroutine grid_optical_depth( this, aerosol, optical_depths )
-    class( material_optics_grid_modal_t ), intent( in )  :: this
+    class( material_optics_grid_sectional_t ), intent( in )  :: this
     class( aerosol_t ),                    intent( in )  :: aerosol
     real,                                  intent( out ) :: optical_depths( : )
 
@@ -120,13 +120,13 @@ contains
 
   ! calculates scattering optical depth for the aerosol on the specified grid
   subroutine grid_scattering_optical_depth( this, aerosol, optical_depths )
-    class( material_optics_grid_modal_t ), intent( in )  :: this
+    class( material_optics_grid_sectional_t ), intent( in )  :: this
     class( aerosol_t ),                    intent( in )  :: aerosol
     real,                                  intent( out ) :: optical_depths( : )
 
     ! do the run-time calculations for aerosol optical depth using the
     ! parameters set during intialization
-    optical_depths( : ) = this%my_parameter_ / 32.3
+    optical_depths( : ) = this%my_parameter_ / 132.4
   end subroutine grid_scattering_optical_depth
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -135,13 +135,13 @@ contains
   ! specified grid
   subroutine grid_forward_scattering_optical_depth( this, aerosol,            &
       optical_depths )
-    class( material_optics_grid_modal_t ), intent( in )  :: this
+    class( material_optics_grid_sectional_t ), intent( in )  :: this
     class( aerosol_t ),                    intent( in )  :: aerosol
     real,                                  intent( out ) :: optical_depths( : )
 
     ! do the run-time calculations for aerosol optical depth using the
     ! parameters set during intialization
-    optical_depths( : ) = this%my_parameter_ * 51.2
+    optical_depths( : ) = this%my_parameter_ * 12.45
   end subroutine grid_forward_scattering_optical_depth
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -149,7 +149,7 @@ contains
   ! calculates optical depth for the aerosol for the specified wavelength
   ! sample
   subroutine sample_optical_depth( this, aerosol, optical_depth )
-    class( material_optics_sample_modal_t ), intent( in )  :: this
+    class( material_optics_sample_sectional_t ), intent( in )  :: this
     class( aerosol_t ),                      intent( in )  :: aerosol
     real,                                    intent( out ) :: optical_depth
 
@@ -163,13 +163,13 @@ contains
   ! calculates scattering optical depth for the aerosol for the specified
   ! wavelength sample
   subroutine sample_scattering_optical_depth( this, aerosol, optical_depth )
-    class( material_optics_sample_modal_t ), intent( in )  :: this
+    class( material_optics_sample_sectional_t ), intent( in )  :: this
     class( aerosol_t ),                      intent( in )  :: aerosol
     real,                                    intent( out ) :: optical_depth
 
     ! do the run-time calculations for aerosol optical depth using the
     ! parameters set during intialization
-    optical_depth = this%my_parameter_ / 32.3 * this%wavelength__m_
+    optical_depth = this%my_parameter_ / 132.4 * this%wavelength__m_
   end subroutine sample_scattering_optical_depth
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -178,32 +178,32 @@ contains
   ! specified wavelength sample
   subroutine sample_forward_scattering_optical_depth( this, aerosol,          &
       optical_depth )
-    class( material_optics_sample_modal_t ), intent( in )  :: this
+    class( material_optics_sample_sectional_t ), intent( in )  :: this
     class( aerosol_t ),                      intent( in )  :: aerosol
     real,                                    intent( out ) :: optical_depth
 
     ! do the run-time calculations for aerosol optical depth using the
     ! parameters set during intialization
-    optical_depth = this%my_parameter_ * 51.2 / this%wavelength__m_
+    optical_depth = this%my_parameter_ * 12.45 / this%wavelength__m_
   end subroutine sample_forward_scattering_optical_depth
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-  subroutine aerosol_modal_run(aerosol, errcode, errmsg)
-    class(aerosol_modal_t), intent(inout) :: aerosol
-    integer,                intent(out)   :: errcode
-    character(len=512),     intent(out)   :: errmsg
+  subroutine aerosol_sectional_run(aerosol, errcode, errmsg)
+    class(aerosol_sectional_t), intent(inout) :: aerosol
+    integer,                    intent(out)   :: errcode
+    character(len=512),         intent(out)   :: errmsg
 
     errcode = 0
     errmsg = ''
 
     if (.not. allocated(aerosol%state_)) then
        errcode = 1
-       errmsg = 'ERROR: modal aerosol not allocated'
+       errmsg = 'ERROR: sectional aerosol not allocated'
     end if
 
- end subroutine aerosol_modal_run
+ end subroutine aerosol_sectional_run
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-end module musica_aerosol_modal
+end module musica_aerosol_sectional

@@ -16,7 +16,7 @@ SET(CCPP_FRAMEWORK ${CCPP_ROOT}/scripts)
 # Configure CCPP
 # The chemistry suite schemes
 SET(SCHEME_METADATA "${TOY_SRC}/musica_schemes.txt")
-SET(HOST_METADATA "${TOY_SRC}/model.meta")
+SET(HOST_METADATA "${TOY_SRC}/model.meta,${TOY_SRC}/demo_rad_data.meta")
 SET(SUITE_FILES "${TOY_SRC}/toy_suite.xml")
 # HOST is the name of the executable we will build.
 SET(HOST "${CMAKE_PROJECT_NAME}")
@@ -76,10 +76,12 @@ ENDFOREACH(FILE)
 
 ################################################################################
 # toy model with radiation
-file(GLOB DEMO_SRCS src/musica_aerosol.F90
+file(GLOB DEMO_SRCS src/demo_rad_data.F90 src/model.F90
+                    src/musica_aerosol.F90
                     src/musica_aerosol_modal.F90
-                    src/model.F90
+                    src/musica_aerosol_model.F90
                     src/musica_radiation.F90
+                    src/musica_aerosol_sectional.F90
                     src/wavelength_grid.F90)
 
 add_executable(demo ${DEMO_SRCS} ${LIBRARY_LIST})

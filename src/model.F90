@@ -72,9 +72,21 @@ end module demo_rad_mod
 
 ! the host model
 program model
-   use demo_rad_mod, only: demo_rad
+   use demo_rad_mod,  only: demo_rad
+   use demo_rad_data, only: demo_rad_data_init
    implicit none
 
+   character(len=256) :: arg_val
+
+   ! get the aerosol model name
+   if (command_argument_count() /= 1) then
+      write(6, *) "Usage: ./demo aerosol_model_name"
+      stop 3
+   end if
+   call get_command_argument(1, arg_val)
+
+   call demo_rad_data_init(trim(arg_val))
+   write(6, '(/,3a)') "Running demo_rad with model, '", trim(arg_val), "'"
    call demo_rad()
 
 end program model

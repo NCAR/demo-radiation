@@ -2,7 +2,7 @@
 
 <suite name="toy_suite" version="1.0">
   <group name="chemistry">
-    <scheme>aerosol_modal</scheme>
+    <scheme>aerosol_model</scheme>
     <scheme>musica_radiation</scheme>
   </group>
 </suite>
