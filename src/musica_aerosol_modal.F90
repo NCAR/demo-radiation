@@ -187,35 +187,4 @@ contains
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-  !> \section arg_table_aerosol_modal_init  Argument Table
-  !! \htmlinclude aerosol_modal_init.html
-  subroutine aerosol_modal_init(aerosol, errcode, errmsg)
-    type(aerosol_modal_t), intent(out) :: aerosol
-    integer,               intent(out) :: errcode
-    character(len=512),    intent(out) :: errmsg
-
-    errcode = 0
-    errmsg = ''
-
-    aerosol = aerosol_modal_t()
-
-  end subroutine aerosol_modal_init
-
-  !> \section arg_table_aerosol_modal_run  Argument Table
-  !! \htmlinclude aerosol_modal_run.html
-  subroutine aerosol_modal_run(aerosol, errcode, errmsg)
-    type(aerosol_modal_t), intent(in)  :: aerosol
-    integer,               intent(out) :: errcode
-    character(len=512),    intent(out) :: errmsg
-
-    errcode = 0
-    errmsg = ''
-
-    if (.not. allocated(aerosol%state_)) then
-       errcode = 1
-       errmsg = 'ERROR: aerosol not allocated'
-    end if
-
-  end subroutine aerosol_modal_run
-
 end module musica_aerosol_modal
