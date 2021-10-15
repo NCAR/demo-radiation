@@ -14,12 +14,6 @@
   type = integer
   units = count
   dimensions = ()
-[ aerosol_model_name ]
-  standard_name = aerosol_model_name
-  units = 1
-  type = character
-  kind = len=*
-  dimensions = ()
 [ errmsg ]
   standard_name = ccpp_error_message
   long_name = Error message for error handling in CCPP

@@ -5,11 +5,15 @@ module demo_rad_mod
 
    public :: demo_rad
 
-CONTAINS
+contains
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
    !> \section arg_table_demo_rad  Argument Table
    !! \htmlinclude arg_table_demo_rad.html
    subroutine demo_rad()
+
+      use demo_model_data,   only: set_aerosol_model_name
       use demo_rad_ccpp_cap, only: demo_rad_ccpp_physics_initialize
       use demo_rad_ccpp_cap, only: demo_rad_ccpp_physics_timestep_initial
       use demo_rad_ccpp_cap, only: demo_rad_ccpp_physics_run
@@ -22,7 +26,6 @@ CONTAINS
       integer                       :: col_end = 1
       character(len=512)            :: errmsg
       character(len=256)            :: arg_val
-      character(len=:), allocatable :: aerosol_model_name
 
       ! get the aerosol model name
       if( command_argument_count( ) .ne. 1 ) then
@@ -30,11 +33,10 @@ CONTAINS
         stop 3
       endif
       call get_command_argument( 1, arg_val )
-      aerosol_model_name = trim( arg_val )
+      call set_aerosol_model_name( trim( arg_val ) )
 
       ! Use the suite information to setup the run
-      call demo_rad_ccpp_physics_initialize('toy_suite', aerosol_model_name,  &
-           errmsg, errcode)
+      call demo_rad_ccpp_physics_initialize('toy_suite', errmsg, errcode)
       if (errcode /= 0) then
          write(6, *) trim(errmsg)
          write(6, *) 'An error occurred in ccpp_physics_init, Exiting...'
@@ -44,7 +46,7 @@ CONTAINS
       do i_time = 1, 5
          ! Initialize the timestep
          call demo_rad_ccpp_physics_timestep_initial('toy_suite',             &
-              aerosol_model_name, errmsg, errcode)
+              errmsg, errcode)
          if (errcode /= 0) then
             write(6, *) trim(errmsg)
             write(6, *) 'An error occurred in ccpp_physics_timestep_init, ",  &
@@ -53,7 +55,7 @@ CONTAINS
          end if
 
          call demo_rad_ccpp_physics_run('toy_suite', 'chemistry', col_start,  &
-              col_end, aerosol_model_name, errmsg, errcode)
+              col_end, errmsg, errcode)
          if (errcode /= 0) then
             write(6, *) trim(errmsg)
             write(6, *) 'An error occurred in ccpp_physics_run, Exiting...'
@@ -61,7 +63,7 @@ CONTAINS
          end if
 
          call demo_rad_ccpp_physics_timestep_final('toy_suite',               &
-              aerosol_model_name, errmsg, errcode)
+              errmsg, errcode)
          if (errcode /= 0) then
             write(6, *) trim(errmsg)
             write(6, *) 'An error occurred in ccpp_physics_timestep_final, ", &
@@ -71,8 +73,7 @@ CONTAINS
 
       end do
 
-      call demo_rad_ccpp_physics_finalize('toy_suite', aerosol_model_name,    &
-           errmsg, errcode)
+      call demo_rad_ccpp_physics_finalize('toy_suite', errmsg, errcode)
       if (errcode /= 0) then
          write(6, *) trim(errmsg)
          write(6,'(a)') 'An error occurred in ccpp_physics_final, Exiting...'
@@ -81,11 +82,15 @@ CONTAINS
 
    end subroutine demo_rad
 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 end module demo_rad_mod
 
 ! the host model
 program model
+
    use demo_rad_mod, only: demo_rad
+
    implicit none
 
    call demo_rad()
