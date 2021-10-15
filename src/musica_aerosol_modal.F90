@@ -13,8 +13,6 @@ module musica_aerosol_modal
   public :: aerosol_modal_t
 
   ! a modal aerosol state and diagnostics
-  !> \section arg_table_aerosol_modal_t  Argument Table
-  !! \htmlinclude aerosol_modal_t.html
   type, extends( aerosol_t ) :: aerosol_modal_t
     integer           :: number_of_modes_
     real(kind_phys), allocatable :: state_(:) ! stand-in for mass, number, etc.

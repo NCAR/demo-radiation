@@ -13,8 +13,6 @@ module musica_aerosol_sectional
   public :: aerosol_sectional_t
 
   ! a sectional aerosol state and diagnostics
-  !> \section arg_table_aerosol_sectional_t  Argument Table
-  !! \htmlinclude aerosol_sectional_t.html
   type, extends( aerosol_t ) :: aerosol_sectional_t
     integer           :: number_of_sections_
     real(kind_phys), allocatable :: state_(:) ! stand-in for mass, number, etc.
