@@ -14,17 +14,16 @@ contains
 
   !> \section arg_table_musica_aerosol_factory_init  Argument Table
   !! \htmlinclude musica_aerosol_factory_init.html
-  function musica_aerosol_factory_init( type_name, errcode, errmsg )          &
-      result( aerosol )
+  subroutine musica_aerosol_factory_init( type_name, aerosol, errcode, errmsg )
 
     use musica_aerosol,                only : aerosol_t
     use musica_aerosol_modal,          only : aerosol_modal_t
     use musica_aerosol_sectional,      only : aerosol_sectional_t
 
-    class(aerosol_t),   pointer     :: aerosol
-    character(len=*),   intent(in)  :: type_name
-    integer,            intent(out) :: errcode
-    character(len=512), intent(out) :: errmsg
+    character(len=*),            intent(in)  :: type_name
+    class(aerosol_t),   pointer, intent(out) :: aerosol
+    integer,                     intent(out) :: errcode
+    character(len=512),          intent(out) :: errmsg
 
     errcode = 0
     errmsg = ''
@@ -38,7 +37,7 @@ contains
       errmsg  = "unsupported aerosol model '"//type_name//"'"
     end if
 
-  end function musica_aerosol_factory_init
+  end subroutine musica_aerosol_factory_init
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

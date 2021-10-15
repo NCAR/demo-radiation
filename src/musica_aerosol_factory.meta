@@ -1,6 +1,7 @@
 [ccpp-table-properties]
   name = musica_aerosol_factory
   type = scheme
+  dependencies = musica_aerosol.F90,musica_aerosol_modal.F90,musica_aerosol_sectional.F90
 
 [ccpp-arg-table]
   name  = musica_aerosol_factory_init
@@ -9,6 +10,12 @@
   standard_name = aerosol_model_name
   units = none
   type = character | kind = len=*
+  dimensions = ()
+  intent = in
+[ aerosol ]
+  standard_name = aerosol
+  units = none
+  type = aerosol_t | polymorphic = True
   dimensions = ()
   intent = out
 [ errcode ]
