@@ -77,7 +77,8 @@ program model
    implicit none
 
    ! This aerosol model type could be read from a namelist
-   call demo_rad_data_init('modal_aerosol')
+!   call demo_rad_data_init('modal_aerosol')
+   call demo_rad_data_init('sectional_aerosol')
    call demo_rad()
 
 end program model

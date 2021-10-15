@@ -81,6 +81,7 @@ file(GLOB DEMO_SRCS src/demo_rad_data.F90 src/model.F90
                     src/musica_aerosol_modal.F90
                     src/musica_aerosol_model.F90
                     src/musica_radiation.F90
+                    src/musica_aerosol_sectional.F90
                     src/wavelength_grid.F90)
 
 add_executable(demo ${DEMO_SRCS} ${LIBRARY_LIST})

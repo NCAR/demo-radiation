@@ -17,7 +17,8 @@ contains
   !> \section arg_table_aerosol_model_init  Argument Table
   !! \htmlinclude aerosol_model_init.html
   subroutine aerosol_model_init(model_name, aerosol, errcode, errmsg)
-    use musica_aerosol_modal, only : aerosol_modal_t, aerosol_modal_init
+    use musica_aerosol_modal,     only : aerosol_modal_t
+    use musica_aerosol_sectional, only : aerosol_sectional_t
 
     character(len=*),              intent(in)  :: model_name
     class(aerosol_t), allocatable, intent(out) :: aerosol
@@ -31,6 +32,9 @@ contains
     case('modal_aerosol')
        allocate( aerosol_modal_t :: aerosol)
        aerosol = aerosol_modal_t()
+    case('sectional_aerosol')
+       allocate( aerosol_sectional_t :: aerosol)
+       aerosol = aerosol_sectional_t()
     case default
        errcode = 1
        errmsg = "Unknown aerosol model, '"//trim(model_name)//"'"
@@ -45,7 +49,6 @@ contains
   !> \section arg_table_aerosol_model_run  Argument Table
   !! \htmlinclude aerosol_model_run.html
   subroutine aerosol_model_run(aerosol, errcode, errmsg)
-    use musica_aerosol_modal,            only : aerosol_modal_run
 
     class(aerosol_t),   intent(inout) :: aerosol
     integer,            intent(out)   :: errcode

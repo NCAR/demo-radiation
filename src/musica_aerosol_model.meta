@@ -2,6 +2,7 @@
   name = aerosol_model
   type = scheme
   dependencies = musica_aerosol.F90,musica_aerosol_modal.F90
+  dependencies = musica_aerosol_sectional.F90
 
 [ccpp-arg-table]
   name  = aerosol_model_init
