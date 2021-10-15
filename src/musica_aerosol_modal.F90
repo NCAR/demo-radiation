@@ -12,9 +12,6 @@ module musica_aerosol_modal
 
   public :: aerosol_modal_t
 
-  public :: aerosol_modal_init
-  public :: aerosol_modal_run
-
   ! a modal aerosol state and diagnostics
   !> \section arg_table_aerosol_modal_t  Argument Table
   !! \htmlinclude aerosol_modal_t.html
@@ -60,8 +57,7 @@ contains
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   function constructor( ) result( aerosol )
-    type( aerosol_modal_t ), pointer :: aerosol
-    allocate( aerosol )
+    type( aerosol_modal_t ) :: aerosol
     aerosol%number_of_modes_ = 3
     allocate( aerosol%state_( aerosol%number_of_modes_ ) )
     ! initialize other aerosol parameters

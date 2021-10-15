@@ -29,7 +29,7 @@
   type  = scheme
 [ aerosol ]
   standard_name = aerosol
-  units = n/a
+  units = none
   type = aerosol_t
   dimensions = ()
   intent = in

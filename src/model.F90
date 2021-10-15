@@ -22,7 +22,7 @@ CONTAINS
       integer                       :: col_end = 1
       character(len=512)            :: errmsg
       character(len=256)            :: arg_val
-      character(len=*), allocatable :: aerosol_model_name
+      character(len=:), allocatable :: aerosol_model_name
 
       ! get the aerosol model name
       if( command_argument_count( ) .ne. 1 ) then
@@ -33,7 +33,8 @@ CONTAINS
       aerosol_model_name = trim( arg_val )
 
       ! Use the suite information to setup the run
-      call demo_rad_ccpp_physics_initialize('toy_suite', errmsg, errcode)
+      call demo_rad_ccpp_physics_initialize('toy_suite', aerosol_model_name,  &
+           errmsg, errcode)
       if (errcode /= 0) then
          write(6, *) trim(errmsg)
          write(6, *) 'An error occurred in ccpp_physics_init, Exiting...'
@@ -43,7 +44,7 @@ CONTAINS
       do i_time = 1, 5
          ! Initialize the timestep
          call demo_rad_ccpp_physics_timestep_initial('toy_suite',             &
-              errmsg, errcode)
+              aerosol_model_name, errmsg, errcode)
          if (errcode /= 0) then
             write(6, *) trim(errmsg)
             write(6, *) 'An error occurred in ccpp_physics_timestep_init, ",  &
@@ -52,14 +53,15 @@ CONTAINS
          end if
 
          call demo_rad_ccpp_physics_run('toy_suite', 'chemistry', col_start,  &
-              col_end, errmsg, errcode)
+              col_end, aerosol_model_name, errmsg, errcode)
          if (errcode /= 0) then
             write(6, *) trim(errmsg)
             write(6, *) 'An error occurred in ccpp_physics_run, Exiting...'
             stop
          end if
 
-         call demo_rad_ccpp_physics_timestep_final('toy_suite', errmsg, errcode)
+         call demo_rad_ccpp_physics_timestep_final('toy_suite',               &
+              aerosol_model_name, errmsg, errcode)
          if (errcode /= 0) then
             write(6, *) trim(errmsg)
             write(6, *) 'An error occurred in ccpp_physics_timestep_final, ", &
@@ -69,7 +71,8 @@ CONTAINS
 
       end do
 
-      call demo_rad_ccpp_physics_finalize('toy_suite', errmsg, errcode)
+      call demo_rad_ccpp_physics_finalize('toy_suite', aerosol_model_name,    &
+           errmsg, errcode)
       if (errcode /= 0) then
          write(6, *) trim(errmsg)
          write(6,'(a)') 'An error occurred in ccpp_physics_final, Exiting...'

@@ -77,7 +77,7 @@ ENDFOREACH(FILE)
 ################################################################################
 # toy model with radiation
 file(GLOB DEMO_SRCS src/musica_aerosol.F90
-                    src/musica_factory.F90
+                    src/musica_aerosol_factory.F90
                     src/musica_aerosol_modal.F90
                     src/musica_aerosol_sectional.F90
                     src/model.F90

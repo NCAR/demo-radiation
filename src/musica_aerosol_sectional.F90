@@ -12,9 +12,6 @@ module musica_aerosol_sectional
 
   public :: aerosol_sectional_t
 
-  public :: aerosol_sectional_init
-  public :: aerosol_sectional_run
-
   ! a sectional aerosol state and diagnostics
   !> \section arg_table_aerosol_sectional_t  Argument Table
   !! \htmlinclude aerosol_sectional_t.html
@@ -60,8 +57,7 @@ contains
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   function constructor( ) result( aerosol )
-    type( aerosol_sectional_t ), pointer :: aerosol
-    allocate( aerosol )
+    type( aerosol_sectional_t ) :: aerosol
     aerosol%number_of_sections_ = 5
     allocate( aerosol%state_( aerosol%number_of_sections_ ) )
     ! initialize other aerosol parameters

@@ -4,9 +4,9 @@ module musica_aerosol_factory
   implicit none
   private
 
-  public : musica_aerosol_factory_init,                                       &
-           musica_aerosol_factory_run,                                        &
-           musica_aerosol_factory_final
+  public :: musica_aerosol_factory_init
+  public :: musica_aerosol_factory_run
+  public :: musica_aerosol_factory_final
 
 contains
 
@@ -20,18 +20,18 @@ contains
     use musica_aerosol_modal,          only : aerosol_modal_t
     use musica_aerosol_sectional,      only : aerosol_sectional_t
 
-    character(len=*),            intent(in)  :: type_name
-    class(aerosol_t),   pointer, intent(out) :: aerosol
-    integer,                     intent(out) :: errcode
-    character(len=512),          intent(out) :: errmsg
+    character(len=*),                intent(in)  :: type_name
+    class(aerosol_t),   allocatable, intent(out) :: aerosol
+    integer,                         intent(out) :: errcode
+    character(len=512),              intent(out) :: errmsg
 
     errcode = 0
     errmsg = ''
 
     if( type_name .eq. "modal" ) then
-      aerosol => aerosol_modal_t( )
+      aerosol = aerosol_modal_t( )
     else if( type_name .eq. "sectional" ) then
-      aerosol => aerosol_sectional_t( )
+      aerosol = aerosol_sectional_t( )
     else
       errcode = 1
       errmsg  = "unsupported aerosol model '"//type_name//"'"
@@ -47,9 +47,9 @@ contains
 
     use musica_aerosol,                only : aerosol_t
 
-    class(aerosol_t),   pointer, intent(inout) :: aerosol
-    integer,                     intent(out)   :: errcode
-    character(len=512),          intent(out)   :: errmsg
+    class(aerosol_t),   intent(inout) :: aerosol
+    integer,            intent(out)   :: errcode
+    character(len=512), intent(out)   :: errmsg
 
     errcode = 0
     errmsg  = ''
@@ -64,14 +64,14 @@ contains
 
     use musica_aerosol,                only : aerosol_t
 
-    class(aerosol_t),   pointer, intent(inout) :: aerosol
-    integer,                     intent(out)   :: errcode
-    character(len=512),          intent(out)   :: errmsg
+    class(aerosol_t),   allocatable, intent(inout) :: aerosol
+    integer,                         intent(out)   :: errcode
+    character(len=512),              intent(out)   :: errmsg
 
     errcode = 0
     errmsg  = ''
 
-    if( associated( aerosol ) ) deallocate( aerosol )
+    if( allocated( aerosol ) ) deallocate( aerosol )
 
   end subroutine musica_aerosol_factory_final
 
