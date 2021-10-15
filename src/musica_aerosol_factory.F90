@@ -4,7 +4,9 @@ module musica_aerosol_factory
   implicit none
   private
 
-  public : musica_aerosol_factory_init, musica_aerosol_factory_final
+  public : musica_aerosol_factory_init,                                       &
+           musica_aerosol_factory_run,                                        &
+           musica_aerosol_factory_final
 
 contains
 
