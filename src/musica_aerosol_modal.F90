@@ -12,9 +12,6 @@ module musica_aerosol_modal
 
   public :: aerosol_modal_t
 
-  public :: aerosol_modal_init
-  public :: aerosol_modal_run
-
   ! a modal aerosol state and diagnostics
   type, extends( aerosol_t ) :: aerosol_modal_t
     integer           :: number_of_modes_
@@ -22,8 +19,7 @@ module musica_aerosol_modal
   contains
     procedure, private :: get_optics_grid
     procedure, private :: get_optics_sample
-    procedure, public  :: init => aerosol_modal_init
-    procedure, public  :: run => aerosol_modal_run
+    procedure, public  :: aerosol_run => aerosol_modal_run
   end type aerosol_modal_t
 
   ! calculator of aerosol optical properties for a particular wavelength grid
@@ -193,20 +189,6 @@ contains
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-  subroutine aerosol_modal_init(aerosol, errcode, errmsg)
-    class(aerosol_modal_t), intent(inout) :: aerosol
-    integer,                intent(out)   :: errcode
-    character(len=512),     intent(out)   :: errmsg
-
-    errcode = 0
-    errmsg = ''
-
-    ! Other init stuff here
-
-  end subroutine aerosol_modal_init
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
   subroutine aerosol_modal_run(aerosol, errcode, errmsg)
     class(aerosol_modal_t), intent(inout) :: aerosol
     integer,                intent(out)   :: errcode
@@ -220,7 +202,7 @@ contains
        errmsg = 'ERROR: modal aerosol not allocated'
     end if
 
-  end subroutine aerosol_modal_run
+ end subroutine aerosol_modal_run
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

@@ -15,8 +15,7 @@ module musica_aerosol
     procedure(get_optics_grid), deferred, private :: get_optics_grid
     procedure(get_optics_sample), deferred, private :: get_optics_sample
     generic :: get_optics => get_optics_grid, get_optics_sample
-    procedure(init_aerosol), deferred :: init
-    procedure(run_aerosol), deferred :: run
+    procedure(run_aerosol), deferred :: aerosol_run
   end type aerosol_t
 
   ! calculator of aerosol optical properties for a particular wavelength grid

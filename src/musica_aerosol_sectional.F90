@@ -19,9 +19,8 @@ module musica_aerosol_sectional
   contains
     procedure, private :: get_optics_grid
     procedure, private :: get_optics_sample
-    procedure, public  :: init => aerosol_sectional_init
-    procedure, public  :: run => aerosol_sectional_run
-  end type aerosol_sectional_t
+    procedure, public  :: aerosol_run => aerosol_sectional_run
+ end type aerosol_sectional_t
 
   ! calculator of aerosol optical properties for a particular wavelength grid
   type, extends( material_optics_grid_t ) :: material_optics_grid_sectional_t
@@ -190,20 +189,6 @@ contains
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-  subroutine aerosol_sectional_init(aerosol, errcode, errmsg)
-    class(aerosol_sectional_t), intent(inout) :: aerosol
-    integer,                    intent(out)   :: errcode
-    character(len=512),         intent(out)   :: errmsg
-
-    errcode = 0
-    errmsg = ''
-
-    ! Other init stuff here
-
-  end subroutine aerosol_sectional_init
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
   subroutine aerosol_sectional_run(aerosol, errcode, errmsg)
     class(aerosol_sectional_t), intent(inout) :: aerosol
     integer,                    intent(out)   :: errcode
@@ -217,7 +202,7 @@ contains
        errmsg = 'ERROR: sectional aerosol not allocated'
     end if
 
-  end subroutine aerosol_sectional_run
+ end subroutine aerosol_sectional_run
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

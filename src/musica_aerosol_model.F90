@@ -40,10 +40,6 @@ contains
        errmsg = "Unknown aerosol model, '"//trim(model_name)//"'"
     end select
 
-    if (errcode == 0) then
-       call aerosol%init(errcode, errmsg)
-    end if
-
   end subroutine aerosol_model_init
 
   !> \section arg_table_aerosol_model_run  Argument Table
@@ -64,7 +60,7 @@ contains
     end if
 
     ! run aerosol model
-    call aerosol%run(errcode, errmsg)
+    call aerosol%aerosol_run(errcode, errmsg)
 
   end subroutine aerosol_model_run
 
