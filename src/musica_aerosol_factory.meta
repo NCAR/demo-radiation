@@ -1,0 +1,76 @@
+[ccpp-table-properties]
+  name = musica_aerosol_factory
+  type = scheme
+  dependencies = musica_aerosol.F90,musica_aerosol_modal.F90,musica_aerosol_sectional.F90
+
+[ccpp-arg-table]
+  name  = musica_aerosol_factory_init
+  type  = scheme
+[ type_name ]
+  standard_name = aerosol_model_name
+  units = none
+  type = character | kind = len=*
+  dimensions = ()
+  intent = in
+[ aerosol ]
+  standard_name = aerosol
+  units = none
+  type = aerosol_t | polymorphic = True
+  dimensions = ()
+  intent = out
+[ errcode ]
+  standard_name = ccpp_error_code
+  units = 1
+  type = integer
+  dimensions = ()
+  intent = out
+[ errmsg ]
+  standard_name = ccpp_error_message
+  units = 1
+  type = character | kind = len=512
+  dimensions = ()
+  intent = out
+
+[ccpp-arg-table]
+  name  = musica_aerosol_factory_run
+  type  = scheme
+[ aerosol ]
+  standard_name = aerosol
+  units = none
+  type = aerosol_t | polymorphic = True
+  dimensions = ()
+  intent = inout
+[ errcode ]
+  standard_name = ccpp_error_code
+  units = 1
+  type = integer
+  dimensions = ()
+  intent = out
+[ errmsg ]
+  standard_name = ccpp_error_message
+  units = 1
+  type = character | kind = len=512
+  dimensions = ()
+  intent = out
+
+[ccpp-arg-table]
+  name  = musica_aerosol_factory_final
+  type  = scheme
+[ aerosol ]
+  standard_name = aerosol
+  units = none
+  type = aerosol_t | polymorphic = True
+  dimensions = ()
+  intent = inout
+[ errcode ]
+  standard_name = ccpp_error_code
+  units = 1
+  type = integer
+  dimensions = ()
+  intent = out
+[ errmsg ]
+  standard_name = ccpp_error_message
+  units = 1
+  type = character | kind = len=512
+  dimensions = ()
+  intent = out

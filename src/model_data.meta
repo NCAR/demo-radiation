@@ -1,0 +1,11 @@
+[ccpp-table-properties]
+  name = demo_model_data
+  type = module
+[ccpp-arg-table]
+  name = demo_model_data
+  type = module
+[ aerosol_model_name ]
+  standard_name = aerosol_model_name
+  units = none
+  type = character | kind = len=:
+  dimensions = ()
